@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Registration</title>
+  </head>
+  <body>
+    <h2>Hotel Registration Form</h2>
+    <form id="registrationForm">
+      <label for="name">Full Name:</label><br /><br />
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="email">Email:</label><br /><br />
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <label for="phone">Phone Number:</label><br /><br />
+      <input type="tel" id="phone" name="phone" required /><br /><br />
+
+      <label for="checkin">Check-in Date:</label><br /><br />
+      <input type="date" id="checkin" name="checkin" required /><br /><br />
+
+      <label for="checkout">Check-out Date:</label><br /><br />
+      <input type="date" id="checkout" name="checkout" required /><br /><br />
+
+      <input type="button" value="Download as CSV" onclick="downloadCSV()" />
+    </form>
+
+    <script>
+      function downloadCSV() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const checkin = document.getElementById("checkin").value;
+        const checkout = document.getElementById("checkout").value;
+
+        // Prepare CSV content
+        const headers = [
+          "Full Name",
+          "Email",
+          "Phone Number",
+          "Check-in Date",
+          "Check-out Date",
+        ];
+        const rows = [[name, email, phone, checkin, checkout]];
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += headers.join(",") + "\n";
+        rows.forEach((row) => {
+          csvContent += row.join(",") + "\n";
+        });
+
+        // Create a download link
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "hotel_registration.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>
